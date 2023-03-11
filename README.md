@@ -1,4 +1,2 @@
-# RushmoreTweaks
-Basically forwards minecraft events to a web server
-
-- [ ] Relay advancements?
+# FriendlyFireRules
+Holds the rules for the FriendlyFire server
