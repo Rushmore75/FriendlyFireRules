@@ -1,0 +1,88 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			url = "http://files.minecraftforge.net/maven"
+			// allowInsecureProtocol = true
+		}
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+		classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.1.0'
+		classpath 'com.wynprice.cursemaven:CurseMaven:1.2.+'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'maven'
+apply plugin: 'com.wynprice.cursemaven'
+
+apply from: 'https://raw.githubusercontent.com/MinecraftModDevelopment/Gradle-Collection/master/generic/markdown-git-changelog.gradle'
+
+def ENV = System.getenv()
+archivesBaseName = mod_name
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+	sourceCompatibility = targetCompatibility = "1.8"
+}
+
+minecraft {
+	version = "${mc_version}-${forge_version}"
+	runDir = "run"
+	mappings = "${mappings_version}"
+
+	replace "0.0.0.ftbutilities", project.version
+	replaceIn "${mod_reference}"
+}
+
+configurations.all {
+	transitive = false
+}
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+	implementation 'com.github.Rushmore75:FTB-Library-Legacy:8e431ae'
+	implementation 'com.google.code.gson:gson:2.7'
+	// implementation 'com.github.Electroblob77:Wizardry:24fb4cf'	
+	provided files (
+		'/home/oliver/Documents/code_projects/java/FriendlyFireRules/ElectoblobsWizardry-4.3.9.jar'
+		// '/home/oliver/Documents/code_projects/java/Wizardry/build/libs/ElectroblobsWizardry-4.3.9.jar'
+	)
+
+}
+
+processResources {
+	inputs.property "version", project.version
+	inputs.property "mcversion", project.minecraft.version
+
+	from(sourceSets.main.resources.srcDirs) {
+		include 'mcmod.info'
+		expand 'version': project.version, 'mcversion': project.minecraft.version
+	}
+
+	from(sourceSets.main.resources.srcDirs) {
+		exclude 'mcmod.info'
+	}
+}
+
+artifacts {
+	archives sourceJar
+}
+
+if (ENV.LOCAL_MAVEN) {
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				repository(url: "file://${ENV.LOCAL_MAVEN}")
+			}
+		}
+	}
+}
