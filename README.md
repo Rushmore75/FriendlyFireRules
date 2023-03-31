@@ -1,4 +1,9 @@
-# RushmoreTweaks
-Basically forwards minecraft events to a web server
+# Friendly Fire Rules Mod
 
-- [ ] Relay advancements?
+- [x] Add a monument block
+    - [ ] y = 2
+- [x] make model
+- [ ] left click detections
+    - [ ] cool down
+    - [ ] announce when it has been touched
+    - [ ] give the person glowing effect

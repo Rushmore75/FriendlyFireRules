@@ -22,3 +22,7 @@ eclipse
 run
 
 libs
+template
+
+.vscode
+.github

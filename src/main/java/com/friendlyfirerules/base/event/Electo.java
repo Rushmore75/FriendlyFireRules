@@ -1,4 +1,4 @@
-package com.basemod.base.event;
+package com.friendlyfirerules.base.event;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
@@ -12,7 +12,7 @@ import electroblob.wizardry.spell.Transportation;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.basemod.base.Base;
+import com.friendlyfirerules.base.Base;
 
 @EventBusSubscriber
 public class Electo extends Thread {
